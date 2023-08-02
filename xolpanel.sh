@@ -1,10 +1,11 @@
 #!/bin/bash
 
 #install
+rm -rf xolpanel.sh
 apt update && apt upgrade
 apt install python3 python3-pip git
-git clone https://github.com/rizkihdyt6/scupdate.git
-unzip scupdate/xolpanel.zip
+git clone https://github.com/Bringas-tunnel/xolpanel.git
+unzip xolpanel/xolpanel.zip
 pip3 install -r xolpanel/requirements.txt
 pip3 install pillow
 
@@ -12,23 +13,28 @@ pip3 install pillow
 echo ""
 read -e -p "[*] Input your Bot Token : " bottoken
 read -e -p "[*] Input Your Id Telegram :" admin
-read -e -p "[*] Input Your Domain :" domain
+read -e -p "[*] Input Your Subdomain :" domain
+read -e -p "[*] Input Your NSdomain :" sldomain
 echo -e BOT_TOKEN='"'$bottoken'"' >> /root/xolpanel/var.txt
 echo -e ADMIN='"'$admin'"' >> /root/xolpanel/var.txt
 echo -e DOMAIN='"'$domain'"' >> /root/xolpanel/var.txt
+echo -e SLDOMAIN='"'$sldomain'"' >> /root/xolpanel/var.txt
 clear
 echo "Done"
 echo "Your Data Bot"
 echo -e "==============================="
-echo "DOMAIN         : $bottoken"
-echo "Email          : $admin"
-echo "Api Key        : $domain"
+echo "Bot Token     : $bottoken"
+echo "Id Telegram   : $admin"
+echo "Subdomain     : $domain"
+echo "NSdomain      : $sldomain"
+
 echo -e "==============================="
-echo "Setting done"
+echo "Setting done Please wait 10s"
+sleep 10
 
 cat > /etc/systemd/system/xolpanel.service << END
 [Unit]
-Description=Simple XolPanel - @XolPane
+Description=Simple XolPanel - @XolPanel
 After=network.target
 
 [Service]
@@ -45,4 +51,10 @@ systemctl enable xolpanel
 
 clear
 
+echo -e "==============================================="
 echo " Installations complete, type /menu on your bot"
+echo -e "==============================================="
+read -n 1 -s -r -p "Press any key to Reboot"
+rm -rf xolpanel.sh
+clear
+reboot
